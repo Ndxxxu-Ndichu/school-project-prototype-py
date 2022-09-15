@@ -18,13 +18,11 @@ def create_app():
         app.debug = True
         app.config['SECRET_KEY'] = 'thisisdasecretkey'
         app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:123456@localhost:5432/transwide"
-        app.config['MONGO_URI'] = "mongodb+srv://easeInvoice-Ndxxxu:22319989657@easeinvoice-cluster.i4ipk.mongodb.net/transwide?retryWrites=true&w=majority"
 
     else:
         app.debug = False
         app.config['SECRET_KEY'] = 'thisisdasecretkey'
         app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:123456@localhost:5432/transwide"
-        app.config['MONGO_URI'] = "mongodb+srv://easeInvoice-Ndxxxu:22319989657@easeinvoice-cluster.i4ipk.mongodb.net/transwide?retryWrites=true&w=majority"
 
 
     db.init_app(app)
