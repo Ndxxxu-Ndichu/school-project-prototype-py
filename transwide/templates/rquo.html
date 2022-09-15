@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/quartz/bootstrap.min.css"
+    />
+    <title>Transwide Pharmaceuticals</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 m-auto">
+              <div class="card card-body">
+                <h1 class="text-center mb-3">
+                   Transwide Pharmaceuticals
+                </h1>
+                
+                <form class="user" method="post" action="/rquotation">
+                    <div class="form-group row">
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <p>Quotation ID</p>
+                            <input value="{{quotation_id}}" name="quotation_id" class="form-control form-control-user" readonly>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>Creator</p>
+                            <input value="{{name}}" name="creator" class="form-control form-control-user" readonly>
+                        </div>
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <p>Date</p>
+                            <input value="{{d}}" name="date_created" class="form-control form-control-user" readonly>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h3>Items</h3>
+                    <div id="show_item">
+                    <div class="form-group row">
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            <input type="text" name="item_name[]" class="form-control form-control-user"  placeholder="Item Name">
+                        </div>
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            <input type="number" name="item_quantity[]" class="form-control form-control-user" id="quantity" placeholder="Item Quantity" onkeyup="calc()">
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="login.html" class="btn btn-primary btn-user btn-block add_item_btn">
+                                Add More
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+
+                    </div>
+
+                    <input type="submit"  class="btn btn-primary btn-user btn-block" value="Request Quotation">
+
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        $(document).ready(function() {
+            $(".add_item_btn").click(function(e) {
+                e.preventDefault();
+                $("#show_item").prepend(`<div class="form-group row">
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <input type="text" name="item_name[]" class="form-control form-control-user"  placeholder="Item Name">
+                                    </div>
+
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <input type="number" name="item_quantity[]" class="form-control form-control-user" id="quantity" placeholder="Item Quantity" onkeyup="calc()">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <a href="login.html" class="btn btn-danger btn-user btn-block remove_item_btn mb-2">
+                                            Remove
+                                        </a>
+                                    </div>
+                                </div>`);
+            });
+            $(document).on('click', '.remove_item_btn', function(e){
+                e.preventDefault();
+                let row_item = $(this).parent().parent();
+                $(row_item).remove();
+            })
+        })
+    </script>
+    <script>
+        function calc() {
+        var textValue1 = document.getElementById('unit_cost').value;
+        var textValue2 = document.getElementById('quantity').value;
+    
+        document.getElementById('total').value = textValue1 * textValue2;
+    }
+    </script>
+    <script>
+        function updateTotal() {
+        var total = 0;//
+        var list = document.querySelectorAll(".total");
+        var values = [];
+        for(var i = 0; i < list.length; ++i) {
+            values.push(parseFloat(list[i].value));
+        }
+        total = values.reduce(function(previousValue, currentValue, index, array){
+            return previousValue + currentValue;
+        });
+        document.getElementById("sub-total").value = total;
+        
+    
+        var sub = document.getElementById("sub-total").value
+        document.getElementById('vat-total').value = parseInt(0.16 * sub)
+        document.getElementById('grand-total').value = parseInt(0.16 * sub) + parseInt(sub)
+    }
+    </script>
+  </body>
+</html>

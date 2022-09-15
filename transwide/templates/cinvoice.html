@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/quartz/bootstrap.min.css"
+    />
+    <title>Transwide Pharmaceuticals</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 m-auto">
+              <div class="card card-body">
+                <h1 class="text-center mb-3">
+                   Transwide Pharmaceuticals
+                </h1>
+                
+                <form class="user" method="post" action="/createInvoice">
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input value="{{invoice_id}}" name="invoice_id" class="form-control form-control-user" readonly>
+                        </div>
+                        
+                        <div class="col-sm-6">
+                            <input value="{{user}}" name="creator" class="form-control form-control-user" readonly>
+                        </div>
+                    </div>
+                       <br>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input value="{{d}}" name="date_created" class="form-control form-control-user" readonly>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="date" name="date_due" class="form-control form-control-user" for>
+                        </div>
+                    </div>
+                   
+                    <hr>
+
+                    <!--Client Details-->
+
+                    <h3>Client Details</h3>
+                    <div class="form-group row">
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <input type="text" name="client_name" class="form-control form-control-user" placeholder="Client Name">
+                        </div>
+                        <div class="col-sm-3 mb-3">
+                            <input type="email" name="client_email" class="form-control form-control-user"  placeholder="Client Email">
+                        </div>
+                        <div class="col-sm-3 mb-3">
+                            <input type="tel" name="client_phone" class="form-control form-control-user"  placeholder="Client Phone">
+                        </div>
+                        
+
+                    </div>
+
+
+
+
+                    <hr>
+
+                    <!--Payment Details-->
+                    <h3>Payment Details</h3>
+                    <h6>Bank Transfer</h6>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" name="bank_name" class="form-control form-control-user" id="exampleFirstName" placeholder="Bank Name">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="number" name="bank_acc" class="form-control form-control-user" id="exampleLastName" placeholder="Bank A/C">
+                        </div>
+                    </div>
+                     <h6>Other Payment Method</h6>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" name="other_name" class="form-control form-control-user" placeholder="MPESA, PAYPAL, NETELLER etc">
+                        </div>
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="number" name="other_id" class="form-control form-control-user" placeholder="Payment ID">
+                        </div>
+                    </div>
+
+                    <h6>Payment Conditions</h6>
+                    <div class="form-group">
+                        <textarea name="conditions" class="form-control"></textarea>
+                    </div>
+                    <hr>
+
+                    <h3>Items</h3>
+                    <div id="show_item">
+                    <div class="form-group row">
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <input type="text" name="item_name[]" class="form-control form-control-user"  placeholder="Item Name">
+                        </div>
+                        <div class="col-sm-2 mb-3 mb-sm-0">
+                            <input type="number" name="item_price[]" class="form-control form-control-user" id="unit_cost" placeholder="Item Price" onkeyup="calc()">
+                        </div>
+                        <div class="col-sm-2 mb-3 mb-sm-0">
+                            <input type="number" name="item_quantity[]" class="form-control form-control-user" id="quantity" placeholder="Item Quantity" onkeyup="calc()">
+                        </div>
+                        <div class="col-sm-2 mb-3">
+                            <input type="number" name="total[]" class="form-control form-control-user total" id="total"  placeholder="Total" onkeyup="calc()">
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="login.html" class="btn btn-primary btn-user btn-block add_item_btn">
+                                Add More
+                            </a>
+                        </div>
+                    </div>
+                        <hr>
+                        <h3>Totals</h3>
+                    <div class="form-group row">
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <p>Sub Total</p>
+                            <input type="number" name="sub_total" class="form-control form-control-user" id="sub-total" readonly>
+                        </div>
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <p>VAT 16%</p>
+                            <input type="number" name="vat" class="form-control form-control-user" id="vat-total" readonly>
+                        </div>
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <p>Grand Total</p>
+                            <input type="number" name="grand_total" class="form-control form-control-user" id="grand-total" readonly>
+                        </div>
+                        <div class="col-sm-3 mb-0 mt-4 mb-sm-0">
+                            <p></p>
+                            <a class="btn btn-primary btn-user btn-block" onclick="updateTotal();">
+                                Calculate
+                            </a>
+                        </div>
+
+                    </div>
+                    
+
+                    </div>
+                    <br>
+                    <input type="submit"  class="btn btn-primary btn-user btn-block" value="Create Invoice">
+
+
+                    
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        $(document).ready(function() {
+            $(".add_item_btn").click(function(e) {
+                e.preventDefault();
+                $("#show_item").prepend(`<div class="form-group row">
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <input type="text" name="item_name[]" class="form-control form-control-user"  placeholder="Item Name">
+                                    </div>
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                        <input type="number" name="item_price[]" class="form-control form-control-user" id="unit_cost" placeholder="Item Price" onkeyup="calc()">
+                                    </div>
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                        <input type="number" name="item_quantity[]" class="form-control form-control-user" id="quantity" placeholder="Item Quantity" onkeyup="calc()">
+                                    </div>
+                                    <div class="col-sm-2 mb-3">
+                                        <input type="number" name="total[]" class="form-control form-control-user total" id="total"  placeholder="Total" onkeyup="calc()">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a href="login.html" class="btn btn-danger btn-user btn-block remove_item_btn">
+                                            Remove
+                                        </a>
+                                    </div>
+                                </div>`);
+            });
+            $(document).on('click', '.remove_item_btn', function(e){
+                e.preventDefault();
+                let row_item = $(this).parent().parent();
+                $(row_item).remove();
+            })
+        })
+    </script>
+    <script>
+        function calc() {
+        var textValue1 = document.getElementById('unit_cost').value;
+        var textValue2 = document.getElementById('quantity').value;
+    
+        document.getElementById('total').value = textValue1 * textValue2;
+    }
+    </script>
+    <script>
+        function updateTotal() {
+        var total = 0;//
+        var list = document.querySelectorAll(".total");
+        var values = [];
+        for(var i = 0; i < list.length; ++i) {
+            values.push(parseFloat(list[i].value));
+        }
+        total = values.reduce(function(previousValue, currentValue, index, array){
+            return previousValue + currentValue;
+        });
+        document.getElementById("sub-total").value = total;
+        
+    
+        var sub = document.getElementById("sub-total").value
+        document.getElementById('vat-total').value = parseInt(0.16 * sub)
+        document.getElementById('grand-total').value = parseInt(0.16 * sub) + parseInt(sub)
+    }
+    </script>
+  </body>
+</html>
